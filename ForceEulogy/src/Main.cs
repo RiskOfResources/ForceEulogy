@@ -7,8 +7,6 @@ using UnityEngine.AddressableAssets;
 using RiskOfOptions;
 using RiskOfOptions.Options;
 using UnityEngine;
-using System;
-using System.Collections.Generic;
 
 namespace PodRacing;
 
@@ -29,7 +27,6 @@ public class ForceEulogy : BaseUnityPlugin
   public static AssetBundle assets;
   public static Sprite artifactOnIcon;
   public static Sprite artifactOffIcon;
-  private static ItemIndex[] cleansableItems = Array.Empty<ItemIndex>();
   public ItemDef beads = Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/LunarTrinket/LunarTrinket.asset").WaitForCompletion();
   public ItemDef eulogy = Addressables.LoadAssetAsync<ItemDef>("RoR2/DLC1/RandomlyLunar/RandomlyLunar.asset").WaitForCompletion();    
 
