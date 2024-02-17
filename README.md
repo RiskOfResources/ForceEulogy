@@ -4,6 +4,10 @@ Companion mod for Gauntlet pod racing, adds an artifact that forces Eulogy Zero 
 
 # Changelog
 
+**1.1.1**
+
+-   Temp fix to remove Eulogy's Lunar tier at game load, isntead of per run if artifact enabled to prevent them from being cleansed
+
 **1.1.0**
 
 -   Add Artifact of Power to allow easy enabling/disabling of ruleset

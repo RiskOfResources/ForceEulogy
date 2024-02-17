@@ -2,7 +2,7 @@
   "name": "ForceEulogy",
   "author": "RiskOfResources",
   "authorName": "RiskOfResources",
-  "version_number": "1.1.0",
+  "version_number": "1.1.1",
   "website_url": "",
   "description": "Companion mod for Gauntlet pod racing, adds an artifact that forces Eulogy Zero into the player's inventory at the start of the run then removes Eulogy Zero (and Beads of Fealty) from the item pool.",
   "dependencies": [

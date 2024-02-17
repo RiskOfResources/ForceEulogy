@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using RiskOfOptions;
 using RiskOfOptions.Options;
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 namespace PodRacing;
@@ -18,7 +19,7 @@ public class ForceEulogy : BaseUnityPlugin
   public const string PluginGUID = PluginAuthor + "." + PluginName;
   public const string PluginAuthor = "RiskOfResources";
   public const string PluginName = "ForceEulogy";
-  public const string PluginVersion = "1.1.0";
+  public const string PluginVersion = "1.1.1";
 
   public static ConfigEntry<int> amount { get; set; }
   public static ConfigEntry<BooleanChoice> removeFromPool { get; set; }
@@ -28,6 +29,7 @@ public class ForceEulogy : BaseUnityPlugin
   public static AssetBundle assets;
   public static Sprite artifactOnIcon;
   public static Sprite artifactOffIcon;
+  private static ItemIndex[] cleansableItems = Array.Empty<ItemIndex>();
   public ItemDef beads = Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/LunarTrinket/LunarTrinket.asset").WaitForCompletion();
   public ItemDef eulogy = Addressables.LoadAssetAsync<ItemDef>("RoR2/DLC1/RandomlyLunar/RandomlyLunar.asset").WaitForCompletion();    
 
@@ -36,7 +38,10 @@ public class ForceEulogy : BaseUnityPlugin
     InitConfig();
     LoadSprites();
     DefineArtifact();
-
+    eulogy.tier = ItemTier.NoTier;
+    #pragma warning disable 0612, 0618
+    eulogy.deprecatedTier = ItemTier.NoTier;
+    #pragma warning restore 0612, 0618
     if (Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions"))
     {
       ModSettingsManager.AddOption(new IntSliderOption(amount));
@@ -55,6 +60,7 @@ public class ForceEulogy : BaseUnityPlugin
         #pragma warning restore 0612, 0618
         PlayerCharacterMasterController._instances[0].master.inventory.GiveItem(eulogy.itemIndex, amount.Value);
       }
+      ItemDef eulogyItemDef = ItemCatalog.GetItemDef(eulogy.itemIndex);
     };
 
     On.RoR2.Run.RefreshLunarCombinedDropList += ( orig, self ) =>
@@ -67,6 +73,8 @@ public class ForceEulogy : BaseUnityPlugin
         {
           PickupIndex eulogyPickup = PickupCatalog.FindPickupIndex(eulogy.itemIndex);
           PickupIndex beadsPickup = PickupCatalog.FindPickupIndex(beads.itemIndex);
+          self.availableLunarItemDropList.Remove(eulogyPickup);
+          self.availableLunarItemDropList.Remove(beadsPickup);
           self.availableLunarCombinedDropList.Remove(eulogyPickup);
           self.availableLunarCombinedDropList.Remove(beadsPickup);
         }
